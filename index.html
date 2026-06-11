@@ -30,7 +30,6 @@
             overflow: hidden;
         }
 
-        /* Container หลัก */
         .slider-container {
             position: relative;
             width: 100vw;
@@ -41,7 +40,6 @@
             background: linear-gradient(135deg, #e0eaf5 0%, #f8f9fa 100%);
         }
 
-        /* สไตล์ของแต่ละสไลด์ */
         .slide {
             position: absolute;
             top: 0;
@@ -66,7 +64,6 @@
             z-index: 10;
         }
 
-        /* กล่องเนื้อหาหลัก */
         .content-box {
             width: 100%;
             max-width: 1100px;
@@ -81,7 +78,6 @@
             justify-content: center;
         }
 
-        /* หน้าปก */
         #slide-0 .content-box {
             text-align: center;
             background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
@@ -94,7 +90,6 @@
             margin-bottom: 20px;
         }
 
-        /* หัวข้อสไลด์ */
         .slide-title {
             font-size: 2.2rem;
             font-weight: 700;
@@ -111,7 +106,6 @@
             margin-bottom: 15px;
         }
 
-        /* ปุ่มนำทาง */
         .nav-btn {
             position: absolute;
             top: 50%;
@@ -165,29 +159,33 @@
         <button class="nav-btn prev-btn" onclick="changeSlide(-1)"><i class="fas fa-chevron-left"></i></button>
         <button class="nav-btn next-btn" onclick="changeSlide(1)"><i class="fas fa-chevron-right"></i></button>
 
+        <!-- Slide 1: ปก -->
         <div class="slide active" id="slide-0">
             <div class="content-box">
-                <h1>ほんだぎけんこうぎょう株式会社</h1>
+                <h1>ほんだぎけんこうぎょうかぶしきがいしゃ</h1>
                 <p style="text-align: center; margin-top: 30px;">はっぴょうしゃ：かん</p>
             </div>
         </div>
 
+        <!-- Slide 2: ประวัติ -->
         <div class="slide" id="slide-1">
             <div class="content-box">
                 <h2 class="slide-title">きぎょうの れきし</h2>
                 <p>そうぎょうしゃ：<strong>ほんだ そういちろう</strong></p>
-                <p>1948ねんに せつりつされました。<br>せかいじゅうで じどうしゃや にりんしゃを はんぱいしている すごい かいしゃです。</p>
+                <p>1948ねんに せつりつされた、せかいの モビリティを ささえる すごい かいしゃです。</p>
             </div>
         </div>
 
+        <!-- Slide 3: ปรัชญา -->
         <div class="slide" id="slide-2">
             <div class="content-box">
                 <h2 class="slide-title">ホンダの りねん</h2>
                 <p>「にんげんそんちょう」を かかげています。</p>
-                <p>じりつ、びょうどう、しんらいを たいせつに している ところが、この かいしゃの とくちょうです。</p>
+                <p>じりつ、びょうどう、しんらいを たいせつに している ところが この かいしゃの とくちょうです。</p>
             </div>
         </div>
 
+        <!-- Slide 4: ธุรกิจ -->
         <div class="slide" id="slide-3">
             <div class="content-box">
                 <h2 class="slide-title">じぎょうの つよみ</h2>
@@ -197,17 +195,18 @@
             </div>
         </div>
 
+        <!-- Slide 5: เหตุผลที่แนะนำ -->
         <div class="slide" id="slide-4">
             <div class="content-box">
                 <h2 class="slide-title">この かいしゃの すごいところ</h2>
-                <p>タイの ホンダで はたらいた けいけんから、グローバルな ネットワークと、ＤＸ（デジタルへんかく）で みらいを つくる しせいに かんめいを うけました。</p>
+                <p>タイでの けいけんから、ホンダの グローバルな ネットワークと、ＤＸ（デジタルへんかく）で みらいを つくる しせいに かんめいを うけました。</p>
             </div>
         </div>
 
+        <!-- Slide 6: จบ -->
         <div class="slide" id="slide-5">
             <div class="content-box" style="text-align: center;">
                 <h2 class="slide-title" style="border: none;">ごせいちょう ありがとう ございました</h2>
-                <p>しつもんが あれば どうぞ！</p>
             </div>
         </div>
 
@@ -217,35 +216,13 @@
     <script>
         let currentSlide = 0;
         const slides = document.querySelectorAll('.slide');
-        const totalSlides = slides.length;
-        const dotsContainer = document.getElementById('dots');
-
-        for (let i = 0; i < totalSlides; i++) {
-            const dot = document.createElement('div');
-            dot.classList.add('dot');
-            if (i === 0) dot.classList.add('active');
-            dot.setAttribute('onclick', `goToSlide(${i})`);
-            dotsContainer.appendChild(dot);
-        }
-        const dots = document.querySelectorAll('.dot');
-
         function updateSlider() {
-            slides.forEach(slide => slide.classList.remove('active'));
-            dots.forEach(dot => dot.classList.remove('active'));
-            slides[currentSlide].classList.add('active');
-            dots[currentSlide].classList.add('active');
+            slides.forEach((s, i) => s.classList.toggle('active', i === currentSlide));
         }
-
-        function changeSlide(dir) {
-            currentSlide = (currentSlide + dir + totalSlides) % totalSlides;
+        function changeSlide(d) {
+            currentSlide = (currentSlide + d + slides.length) % slides.length;
             updateSlider();
         }
-
-        function goToSlide(i) {
-            currentSlide = i;
-            updateSlider();
-        }
-
         document.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowRight') changeSlide(1);
             if (e.key === 'ArrowLeft') changeSlide(-1);
